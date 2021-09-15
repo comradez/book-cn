@@ -230,3 +230,59 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 该程序在索引操作中使用无效值时导致**运行时**（*runtime*）错误。程序退出并显示错误消息，未执行后面的 `println!` 语句。当你尝试使用索引访问元素时，Rust 将检查你指定的索引是否小于数组长度。如果索引大于或等于数组长度，Rust会出现 `panic`。这种检查必须在运行时进行，尤其是在这种情况下，因为编译器可能无法知道用户之后运行代码时将输入什么值。
 
 这是 Rust 在实践中安全原则的第一个例子。在很多低级语言中，并不进行这种检查，而且在你使用不正确的索引时，可以访问无效的内存。Rust 通过立即退出来的方式防止这种错误，而不是允许内存访问并继续运行程序。 第 9 章将进一步讨论 Rust 的错误处理。
+
+## 动手试一试
+
+在我们比较熟悉的C/C++语言中，当算术运算符两侧的变量类型不匹配时，编译器会对它们进行一系列的隐式类型转换以便于运算的进行。在Rust中，仍然是这样吗？
+
+我们先运行一下这段代码，并且观察它的输出：
+
+```rust
+fn main() {
+    let x: i32 = 10;
+    let y: u32 = 5;
+    println!("x + y is {}", x + y);
+}
+```
+```console
+   Compiling playground v0.0.1 (/playground)
+error[E0308]: mismatched types
+ --> src/main.rs:4:33
+  |
+4 |     println!("x + y is {}", x + y);
+  |                                 ^ expected `i32`, found `u32`
+
+error[E0277]: cannot add `u32` to `i32`
+ --> src/main.rs:4:31
+  |
+4 |     println!("x + y is {}", x + y);
+  |                               ^ no implementation for `i32 + u32`
+  |
+  = help: the trait `Add<u32>` is not implemented for `i32`
+
+Some errors have detailed explanations: E0277, E0308.
+For more information about an error, try `rustc --explain E0277`.
+error: could not compile `playground` due to 2 previous errors
+```
+
+可以看到，Rust并不允许隐式类型转换，即使这一转换**看起来**是安全的。
+
+要对整数、浮点数等基本类型进行转换，可以使用`as`运算符。
+
+```rust
+fn main() {
+    let x: i32 = 10;
+    let y: u32 = 5;
+    println!("x + y is {}", x + y as i32);
+}
+```
+
+这段代码现在会打印`x / y = 2`，你能修改一下，让它的输出为更加精确的浮点数吗？
+
+```rust, editable
+fn main() {
+    let x: i32 = 12;
+    let y: i32 = 5;
+    println!("x / y is {}", x / y);
+}
+```

@@ -112,3 +112,62 @@ const MAX_POINTS: u32 = 100_000;
 [comparing-the-guess-to-the-secret-number]:
 ch02-00-guessing-game-tutorial.html#比较猜测的数字和秘密数字
 [data-types]: ch03-02-data-types.html#数据类型
+
+## 动手试一试
+
+以下几段代码哪些有问题？分别有什么问题？请对有问题的代码做出修改，以使其通过编译并正常运行。
+
+```rust, editable
+# fn main() {
+    let x = 1911;
+    x = 2022;
+    println!("x is {}", x);
+# }
+```
+
+```rust, editable
+# fn main() {
+    let mut x = 1911;
+    x = 2022;
+    println!("x is {}", x);
+# }
+```
+
+```rust, editable
+# fn main() {
+    let mut x = 1911;
+    x = "2022";
+    println!("x is {}", x);
+# }
+```
+
+```rust, editable
+# fn main() {
+    let mut x = 1911;
+    let x = "2022";
+    println!("x is {}", x);
+# }
+```
+
+```rust, editable
+# fn main() {
+    const x = 1911;
+    println!("x is {}", x);
+# }
+```
+
+```rust, editable
+# fn main() {
+    const x: i32 = 1911;
+    x = 2022;
+    println!("x is {}", x);
+# }
+```
+
+```rust, editable
+# fn main() {
+    const x: i32 = 1911;
+    let x = 2022;
+    println!("x is {}", x);
+# }
+```
